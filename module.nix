@@ -15,15 +15,19 @@ in
 
   config = lib.mkIf cfg.enable {
     systemd.user.services.rpc-server = {
-      description = "Discord RPC server";
-      wantedBy = [ "default.target" ];
-      after = [ "graphical-session.target" ];
-      partOf = [ "graphical-session.target" ];
-      serviceConfig = {
+      Unit = {
+        Description = "Discord RPC server";
+        After = [ "graphical-session.target" ];
+        PartOf = [ "graphical-session.target" ];
+      };
+      Service = {
         Type = "simple";
         ExecStart = "${cfg.package}/bin/rpc-server";
         Restart = "on-failure";
         RestartSec = "5s";
+      };
+      Install = {
+        WantedBy = [ "default.target" ];
       };
     };
   };
