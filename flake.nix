@@ -50,7 +50,7 @@
     nixosModules.default = { pkgs, lib, ... }: {
       imports = [ ./module.nix ];
       services.rpc-server.package = lib.mkDefault
-        self.packages.${pkgs.system}.rpc-server;
+        self.packages.${pkgs.stdenv.hostPlatform.system}.rpc-server;
     };
   };
 }
